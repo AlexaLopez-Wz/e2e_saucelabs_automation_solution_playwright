@@ -15,14 +15,14 @@ jobs:
         with:
           node-version: lts/*
       - name: set variables
-        env:
-          USERNAME: ${{ secrets.USERNAME }}
-          PASSWORD: ${{ secrets.PASSWORD }}
       - name: Install dependencies
         run: npm ci
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
       - name: Run Playwright tests
+        env:
+          USERNAME: ${{ secrets.USERNAME }}
+          PASSWORD: ${{ secrets.PASSWORD }}
         run: USERNAME='${USERNAME}' PASSWORD='${PASSWORD}' npx playwright test
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
